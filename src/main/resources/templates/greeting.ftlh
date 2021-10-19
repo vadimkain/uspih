@@ -1,5 +1,21 @@
 <#import "parts/common.ftlh" as c>
 <@c.page>
-    <h1>Hello, guest</h1>
-    <h3>This is a simple clone off Twitter</h3>
+    <div class="row">
+        <div class="col-md-12 col-11">
+            <h1>Фінансовий облік від <b>Uspih</b></h1>
+            <h4>Для ведення фінансового обліку в особистих і бізнес цілях</h4>
+            <h4>Простий і зручний у використанні</h4>
+        </div>
+    </div>
+
+    <br>
+
+    <div class="row">
+        <div class="col-md-2 mt-2">
+            <a href="/login" class="btn btn-xs blue col-md-12 col-5" style="color: white;">Вхід</a>
+        </div>
+        <div class="col-md-2 mt-2">
+            <a href="/registration" class="btn btn-xs blue col-md-12 col-5" style="color: white;">Реєстрація</a>
+        </div>
+    </div>
 </@c.page>

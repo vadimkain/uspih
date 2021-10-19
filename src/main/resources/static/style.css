@@ -1,3 +1,51 @@
 body {
     color: #113;
 }
+
+.btn:hover {
+    color: #ffffff;
+}
+
+.btn.blue {
+    background: linear-gradient(to left, #7474bf, #348ac7);
+    color: #fff;
+}
+
+.btn.blue:hover {
+    background: linear-gradient(to left, #348ac7, #7474bf);
+}
+
+.btn.blue:before {
+    background: linear-gradient(to right, #7474bf, #348ac7);
+    color: #fff;
+}
+
+.btn.green {
+    background: linear-gradient(to left, #414d0b, #727a17);
+    color: #fff;
+}
+
+.btn.green:before {
+    background: linear-gradient(to right, #414d0b, #727a17);
+    color: #fff;
+}
+
+.btn.orange {
+    background: linear-gradient(to left, #fe8c00, #f83600);
+    color: #fff;
+}
+
+.btn.orange:before {
+    background: linear-gradient(to right, #fe8c00, #f83600);
+    color: #fff;
+}
+
+.btn.purple {
+    background: linear-gradient(to left, #c04848, #480048);
+    color: #fff;
+}
+
+.btn.purple:before {
+    background: linear-gradient(to right, #c04848, #480048);
+    color: #fff;
+}
