@@ -49,3 +49,21 @@ body {
     background: linear-gradient(to right, #c04848, #480048);
     color: #fff;
 }
+
+.btn.yellow {
+    transition: 1s;
+    background: linear-gradient(to right, #eec111, #987900);
+    color: #fff;
+}
+
+.btn.yellow:before {
+    transition: 1s;
+    background: #eec111;
+    color: #fff;
+}
+
+.btn.yellow:not(:hover) {
+    transition: 1s;
+    background: #eec111;
+    color: #fff;
+}

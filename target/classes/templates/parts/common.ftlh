@@ -5,6 +5,7 @@
         <meta charset="UTF-8">
         <title>Uspih</title>
         <link rel="stylesheet" href="/static/style.css">
+        <link rel="stylesheet" href="/static/loginpage.css">
 
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -31,6 +32,8 @@
             integrity="sha384-skAcpIdS7UcVUC05LJ9Dxay8AXcDYfBJqt1CJ85S/CFujBsIzCIv+l9liuYLaMQ/"
             crossorigin="anonymous"></script>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
     </body>
     </html>
 </#macro>

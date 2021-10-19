@@ -50,7 +50,7 @@ public class RegistrationController {
 
         // Если проверка капчи неуспешна
         if (!response.isSuccess()) {
-            model.addAttribute("captchaError", "Fill captcha");
+            model.addAttribute("captchaError", "Каптча введена неверно или она пустая");
         }
 
         boolean isConfirmEmpty = passwordConfirm.isEmpty();

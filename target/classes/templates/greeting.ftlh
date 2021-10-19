@@ -1,4 +1,6 @@
+<#include "parts/security.ftlh">
 <#import "parts/common.ftlh" as c>
+
 <@c.page>
     <div class="row">
         <div class="col-md-12 col-11">
@@ -10,12 +12,14 @@
 
     <br>
 
-    <div class="row">
-        <div class="col-md-2 mt-2">
-            <a href="/login" class="btn btn-xs blue col-md-12 col-5" style="color: white;">Вхід</a>
+    <#if name == "unknow">
+        <div class="row">
+            <div class="col-md-3 col-lg-2 mt-2">
+                <a href="/login" class="btn btn-xs blue col-md-12 col-5" style="color: white;">Вхід</a>
+            </div>
+            <div class="col-md-3 col-lg-2 mt-2">
+                <a href="/registration" class="btn btn-xs blue col-md-12 col-5" style="color: white;">Реєстрація</a>
+            </div>
         </div>
-        <div class="col-md-2 mt-2">
-            <a href="/registration" class="btn btn-xs blue col-md-12 col-5" style="color: white;">Реєстрація</a>
-        </div>
-    </div>
+    </#if>
 </@c.page>
