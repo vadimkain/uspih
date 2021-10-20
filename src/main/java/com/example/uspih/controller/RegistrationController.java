@@ -1,11 +1,11 @@
 package com.example.uspih.controller;
 
+import com.example.uspih.domain.Role;
 import com.example.uspih.domain.User;
 import com.example.uspih.domain.dto.CaptchaResponseDto;
 import com.example.uspih.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -51,18 +51,18 @@ public class RegistrationController {
 
         // Если проверка капчи неуспешна
         if (!response.isSuccess()) {
-            model.addAttribute("captchaError", "Каптча введена неверно или она пустая");
+            model.addAttribute("captchaError", "Капча введена невірно або вона порожня");
         }
 
         boolean isConfirmEmpty = passwordConfirm.isEmpty();
 
         if (isConfirmEmpty) {
-            model.addAttribute("password2Error", "Поле с подтверждением пароля не может быть пустым");
+            model.addAttribute("password2Error", "Поле з підтвердженням пароля не може бути порожнім");
         }
 
         // Проверяем, сходится ли два пароля, которые пользователь ввёл для проверки
         if (user.getPassword() != null && !user.getPassword().equals(passwordConfirm)) {
-            model.addAttribute("passwordError", "Пароли не совпадают");
+            model.addAttribute("passwordError", "Паролі не співпадають");
         }
 
         // Проверяем ошибки валидации
@@ -76,23 +76,27 @@ public class RegistrationController {
         }
 
         if (!userService.addUser(user)) {
-            model.addAttribute("usernameError", "Такой пользователь уже существует!");
+            model.addAttribute("usernameError", "Такий користувач вже існує");
             return "registration";
         }
-        return "redirect:/login";
+
+        model.addAttribute("message", "Код активації відправлено на пошту, перейдіть по ньому");
+        model.addAttribute("messageType", "success");
+
+        return "login";
     }
 
     // Подтверждение аккаунта пользователем
-    @GetMapping("/activate/{code}")
+    @GetMapping("/registration/activate/{code}")
     public String activate(Model model, @PathVariable String code) {
         boolean isActivate = userService.activateUser(code);
 
         if (isActivate) {
             model.addAttribute("messageType", "success");
-            model.addAttribute("message", "Вы успешно активировали учетную запись");
+            model.addAttribute("message", "Ви успішно активували обліковий запис");
         } else {
             model.addAttribute("messageType", "danger");
-            model.addAttribute("message", "Код активации не найден");
+            model.addAttribute("message", "Код активації не найден");
         }
 
         return "login";

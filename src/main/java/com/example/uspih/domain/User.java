@@ -16,17 +16,17 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @NotBlank(message = "Поле username не может быть пустым")
+    @NotBlank(message = "Поле логіну не може бути порожнім")
     private String username;
 
-    @NotBlank(message = "Поле password не может быть пустым")
+    @NotBlank(message = "Поле паролю не може бути порожнім")
     private String password;
 
     private boolean active;
 
     // Работа с email
-    @Email(message = "Поле email введена некорректно") // Проверяем, что ввели действительно почту
-    @NotBlank(message = "Поле email не может быть пустым")
+    @Email(message = "Поле email введено некоректно") // Проверяем, что ввели действительно почту
+    @NotBlank(message = "Поле email не може бути порожнім")
     private String email;
     private String activationCode;
 
