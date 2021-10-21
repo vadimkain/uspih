@@ -45,10 +45,10 @@
             background: #eec111;
             color: white;
         }
+
         .btn-y:hover {
             font-weight: bold;
         }
-
     </style>
 
     <div class="container">
@@ -170,6 +170,6 @@
 <#macro logout>
     <form action="/logout" method="post">
         <input type="hidden" name="_csrf" value="${_csrf.token}"/>
-        <button type="submit" class="btn btn-secondary">Sign Out</button>
+        <button type="submit" class="btn btn-xs blue">Вихід</button>
     </form>
 </#macro>

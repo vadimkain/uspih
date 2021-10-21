@@ -15,10 +15,10 @@
     <#if name == "unknow">
         <div class="row">
             <div class="col-md-3 col-lg-2 mt-2">
-                <a href="/login" class="btn btn-xs blue col-md-12 col-5" style="color: white;">Вхід</a>
+                <a href="/login" class="btn btn-xs blue col-md-12 col-5">Вхід</a>
             </div>
             <div class="col-md-3 col-lg-2 mt-2">
-                <a href="/registration" class="btn btn-xs blue col-md-12 col-5" style="color: white;">Реєстрація</a>
+                <a href="/registration" class="btn btn-xs blue col-md-12 col-5">Реєстрація</a>
             </div>
         </div>
     </#if>

@@ -4,48 +4,68 @@ body {
 
 .btn:hover {
     color: #ffffff;
+    font-weight: bold;
 }
 
 .btn.blue {
     background: linear-gradient(to left, #7474bf, #348ac7);
     color: #fff;
+    font-weight: bold;
 }
 
 .btn.blue:hover {
     background: linear-gradient(to left, #348ac7, #7474bf);
+    font-weight: bold;
 }
 
 .btn.blue:before {
     background: linear-gradient(to right, #7474bf, #348ac7);
     color: #fff;
+    font-weight: bold;
 }
 
 .btn.green {
     background: linear-gradient(to left, #414d0b, #727a17);
     color: #fff;
+    font-weight: bold;
+}
+
+.btn.green:hover {
+    background: linear-gradient(to left, #727a17, #414d0b);
+    font-weight: bold;
 }
 
 .btn.green:before {
     background: linear-gradient(to right, #414d0b, #727a17);
     color: #fff;
+    font-weight: bold;
 }
 
 .btn.orange {
     background: linear-gradient(to left, #fe8c00, #f83600);
     color: #fff;
+    font-weight: bold;
+}
+
+.btn.orange:hover {
+    background: linear-gradient(to left, #f83600, #fe8c00);
+    font-weight: bold;
 }
 
 .btn.orange:before {
     background: linear-gradient(to right, #fe8c00, #f83600);
     color: #fff;
+    font-weight: bold;
 }
 
 .btn.purple {
     background: linear-gradient(to left, #c04848, #480048);
     color: #fff;
+    font-weight: bold;
 }
 
 .btn.purple:before {
     background: linear-gradient(to right, #c04848, #480048);
     color: #fff;
+    font-weight: bold;
 }
