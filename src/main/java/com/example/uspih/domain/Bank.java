@@ -16,7 +16,7 @@ public class Bank {
     private String title_bank;
 
     @Column(columnDefinition = "float default 0")
-    private Float score;
+    private Double score;
 
     public Bank() {
     }
@@ -45,11 +45,11 @@ public class Bank {
         this.title_bank = title_bank;
     }
 
-    public Float getScore() {
+    public Double getScore() {
         return score;
     }
 
-    public void setScore(Float score) {
+    public void setScore(Double score) {
         this.score = score;
     }
 }

@@ -57,7 +57,15 @@
                         <div class="col-md-1 col-1"></div>
                         <label class="col-form-label col-md-3 col-3">Назва рахунку:</label>
                         <div class="col-md-7 col-8">
-                            <input type="text" name="title_bank" class="form-control isInput">
+                            <input type="text"
+                                   name="title_bank"
+                                   class="form-control isInput ${(TitleBankError??)?string('is-invalid', '')}"
+                                   maxlength="20">
+                            <#if TitleBankError??>
+                                <div class="invalid-feedback">
+                                    ${TitleBankError}
+                                </div>
+                            </#if>
                         </div>
                     </div>
                     <br>
@@ -65,18 +73,21 @@
                         <div class="col-md-1 col-1"></div>
                         <label class="col-form-label col-md-3 col-3">Поточний рахунок:</label>
                         <div class="col-md-7 col-8">
-                            <input type="text" name="score" class="form-control isInput">
+                            <input type="text"
+                                   name="score"
+                                   class="form-control isInput ValidateScore ${(ScoreBankError??)?string('is-invalid', '')}"
+                                   maxlength="80">
+                            <#if ScoreBankError??>
+                                <div class="invalid-feedback">
+                                    ${ScoreBankError}
+                                </div>
+                            </#if>
                         </div>
                     </div>
                     <br>
                     <div class="row">
                         <div class="col-md-1 col-1"></div>
                         <div class="col-md-11 col-11">
-                            <!--button type="submit" class="btn btn-xs col-md-4 orange"
-                                    name="CancelNewBank"
-                                    value="cancel">
-                                Скасувати
-                            </button-->
                             <a href="/main" class="btn btn-xs orange col-lg-2 col-md-4 col-5">Скасувати</a>
                             <input type="hidden" name="_csrf" value="${_csrf.token}"/>
                             <button type="submit" class="btn btn-xs green col-lg-2 col-md-4 col-5">
@@ -89,4 +100,9 @@
             <br>
         </div>
     </div>
+    <script>
+        document.querySelector('.ValidateScore').addEventListener('keyup', function () {
+            this.value = this.value.replace(/[^\d.,-]/g, '');
+        });
+    </script>
 </#macro>

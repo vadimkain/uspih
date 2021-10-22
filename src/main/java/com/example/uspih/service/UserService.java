@@ -1,7 +1,9 @@
 package com.example.uspih.service;
 
+import com.example.uspih.domain.Bank;
 import com.example.uspih.domain.Role;
 import com.example.uspih.domain.User;
+import com.example.uspih.repos.BankRepo;
 import com.example.uspih.repos.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -18,6 +20,9 @@ import java.util.stream.Collectors;
 public class UserService implements UserDetailsService {
     @Autowired
     private UserRepo userRepo;
+
+    @Autowired
+    private BankRepo bankRepo;
 
     @Autowired
     private MailSender mailSender;
@@ -86,6 +91,15 @@ public class UserService implements UserDetailsService {
         user.getRoles().add(Role.ACTIVATE);
 
         userRepo.save(user);
+
+        // Добавление счёта для нового пользователя
+
+        Bank bank = new Bank();
+        bank.setOwner(user);
+        bank.setTitle_bank("Головний рахунок");
+        bank.setScore((double) 0);
+
+        bankRepo.save(bank);
 
         return true;
     }

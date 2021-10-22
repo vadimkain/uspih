@@ -12,10 +12,13 @@ public class BankService {
     @Autowired
     private BankRepo bankRepo;
 
-    public boolean addBank(User owner, Bank bank) {
-        Bank OwnerNewBank = bankRepo.findByOwner(owner);
+    public boolean NewBank(User owner, String title_bank, double score) {
+        Bank newbank = new Bank();
 
-        System.out.println(OwnerNewBank);
+        newbank.setOwner(owner);
+        newbank.setTitle_bank(title_bank);
+        newbank.setScore(score);
+        bankRepo.save(newbank);
 
         return true;
     }
