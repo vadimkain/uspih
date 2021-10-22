@@ -16,7 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
+import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 @Controller
@@ -53,9 +54,10 @@ public class BankController {
             model.addAttribute("ActivateDeleteBankForm", false);
         }
 
-        Iterable<Bank> banks = bankRepo.findByOwner(user);
+        List<Bank> banks = bankRepo.findByOwner(user);
 
         model.addAttribute("banks", banks);
+        model.addAttribute("TotalScore", bankService.TotalScore(user));
 
         return "main";
     }
@@ -67,43 +69,45 @@ public class BankController {
             @RequestParam("score") String score, // Это должны нормализовать
             Model model
     ) {
-        // Проверка правильности ввода score
+        Iterable<Bank> banks = bankRepo.findByOwner(user);
+
+        model.addAttribute("ActivateNewBankForm", true);
+        model.addAttribute("ActivateDeleteBankForm", false);
+        model.addAttribute("banks", banks);
+        model.addAttribute("TotalScore", bankService.TotalScore(user));
+
         if (title_bank.isEmpty()) {
             model.addAttribute("TitleBankError", "Це поле не може бути порожнім");
-            model.addAttribute("ActivateNewBankForm", true);
-
-            Iterable<Bank> banks = bankRepo.findByOwner(user);
-
-            model.addAttribute("banks", banks);
-
+            if (score.isEmpty()) {
+                model.addAttribute("ScoreBankError", "Це поле не може бути порожнім");
+                return "main";
+            }
             return "main";
-        }
-
-        if (validateScoreCervice.ValidateScore(score)) {
-
-            double doubleScore = Double.parseDouble(score);
-            doubleScore = (double) Math.round(doubleScore * 100) / 100;
-
-            bankService.NewBank(user, title_bank, doubleScore);
-
-            return "redirect:/main";
+        } else if (score.isEmpty()) {
+            model.addAttribute("ScoreBankError", "Це поле не може бути порожнім");
+            return "main";
         } else {
-            model.addAttribute("ScoreBankError", "Неправильно введені дані. (Приклад: -25000,50 або 125000)");
-            model.addAttribute("ActivateNewBankForm", true);
-
-            Iterable<Bank> banks = bankRepo.findByOwner(user);
-
-            model.addAttribute("banks", banks);
-
-            return "main";
+            if (validateScoreCervice.ValidateScore(score)) {
+                double doubleScore = Double.parseDouble(score);
+                doubleScore = (double) Math.round(doubleScore * 100) / 100;
+                bankService.NewBank(user, title_bank, doubleScore);
+            } else {
+                model.addAttribute("ScoreBankError", "Неправильно введені дані. (Приклад: -25000,50 або 125000)");
+                return "main";
+            }
         }
+
+        return "redirect:/main";
     }
 
     @PostMapping("/deletebank")
     public String DeleteBank(
             @AuthenticationPrincipal User user,
+            @RequestParam Map<String, String> form,
             Model model
     ) {
+        bankService.DeleteBank(user, form);
+
         return "redirect:/main";
     }
 }

@@ -5,15 +5,6 @@
             text-decoration: none;
         }
 
-        .isNotRegisterForm1 {
-            color: #eec111;
-            font-weight: bold;
-        }
-
-        .isRegisterForm1 {
-            color: #7f8291;
-        }
-
         label {
             color: #7f8291;
             font-weight: bold;
@@ -48,6 +39,14 @@
 
         .btn-y:hover {
             font-weight: bold;
+        }
+
+        .isRegisterForm1 {
+            color: #7f8291;
+        }
+
+        .isNotRegisterForm1 {
+            color: #eec111;
         }
     </style>
 

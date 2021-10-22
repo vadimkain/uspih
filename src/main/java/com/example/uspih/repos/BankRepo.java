@@ -8,4 +8,6 @@ import java.util.List;
 
 public interface BankRepo extends JpaRepository<Bank, Long> {
     List<Bank> findByOwner(User owner);
+
+    void delete(Bank bank);
 }

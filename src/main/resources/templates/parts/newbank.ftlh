@@ -102,7 +102,7 @@
     </div>
     <script>
         document.querySelector('.ValidateScore').addEventListener('keyup', function () {
-            this.value = this.value.replace(/[^\d.,-]/g, '');
+            this.value = this.value.replace(/[^\d.-]/g, '');
         });
     </script>
 </#macro>
