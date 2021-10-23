@@ -1,9 +1,11 @@
 package com.example.uspih.service;
 
 import com.example.uspih.domain.Bank;
+import com.example.uspih.domain.CategoriesTransaction;
 import com.example.uspih.domain.Role;
 import com.example.uspih.domain.User;
 import com.example.uspih.repos.BankRepo;
+import com.example.uspih.repos.CategoriesRepo;
 import com.example.uspih.repos.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -29,6 +31,9 @@ public class UserService implements UserDetailsService {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private CategoriesRepo categoriesRepo;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -89,7 +94,6 @@ public class UserService implements UserDetailsService {
         user.getRoles().clear();
         user.getRoles().add(Role.USER);
         user.getRoles().add(Role.ACTIVATE);
-
         userRepo.save(user);
 
         // Добавление счёта для нового пользователя
@@ -98,8 +102,14 @@ public class UserService implements UserDetailsService {
         bank.setOwner(user);
         bank.setTitle_bank("Головний рахунок");
         bank.setScore((double) 0);
-
         bankRepo.save(bank);
+
+        // Добавление дефолтной категории дохода/расхода
+
+        CategoriesTransaction categoriesTransaction = new CategoriesTransaction();
+        categoriesTransaction.setOwner(user);
+        categoriesTransaction.setTitle_category("Зарплата");
+        categoriesRepo.save(categoriesTransaction);
 
         return true;
     }

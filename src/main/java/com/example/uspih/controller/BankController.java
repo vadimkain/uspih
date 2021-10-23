@@ -1,8 +1,12 @@
 package com.example.uspih.controller;
 
 import com.example.uspih.domain.Bank;
+import com.example.uspih.domain.CategoriesTransaction;
+import com.example.uspih.domain.Transactions;
 import com.example.uspih.domain.User;
 import com.example.uspih.repos.BankRepo;
+import com.example.uspih.repos.CategoriesRepo;
+import com.example.uspih.repos.TransactionRepo;
 import com.example.uspih.service.BankService;
 import com.example.uspih.service.ValidateScoreCervice;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +38,12 @@ public class BankController {
     @Autowired
     private ValidateScoreCervice validateScoreCervice;
 
+    @Autowired
+    private CategoriesRepo categoriesRepo;
+
+    @Autowired
+    private TransactionRepo transactionRepo;
+
     @GetMapping
     public String MainPage(
             @AuthenticationPrincipal User user,
@@ -41,6 +51,7 @@ public class BankController {
             Model model) {
         String parameter_newbank = request.getParameter("newbank");
         String parameter_deletebank = request.getParameter("deletebank");
+        String parameter_newmoney = request.getParameter("newmoney");
 
         if (Objects.equals(parameter_newbank, "yes")) {
             model.addAttribute("ActivateNewBankForm", true);
@@ -54,10 +65,20 @@ public class BankController {
             model.addAttribute("ActivateDeleteBankForm", false);
         }
 
+        if (Objects.equals(parameter_newmoney, "yes")) {
+            model.addAttribute("ActivateNewMoneyForm", true);
+        } else {
+            model.addAttribute("ActivateNewMoneyForm", false);
+        }
+
         List<Bank> banks = bankRepo.findByOwner(user);
+        List<CategoriesTransaction> categoriesTransactions = categoriesRepo.findByOwner(user);
+        Iterable<Transactions> transactionsList = transactionRepo.findByOwner(user);
 
         model.addAttribute("banks", banks);
+        model.addAttribute("categories", categoriesTransactions);
         model.addAttribute("TotalScore", bankService.TotalScore(user));
+        model.addAttribute("transactionsList", transactionsList);
 
         return "main";
     }
@@ -70,11 +91,14 @@ public class BankController {
             Model model
     ) {
         Iterable<Bank> banks = bankRepo.findByOwner(user);
+        Iterable<Transactions> transactionsList = transactionRepo.findByOwner(user);
 
         model.addAttribute("ActivateNewBankForm", true);
         model.addAttribute("ActivateDeleteBankForm", false);
+        model.addAttribute("ActivateNewMoneyForm", false);
         model.addAttribute("banks", banks);
         model.addAttribute("TotalScore", bankService.TotalScore(user));
+        model.addAttribute("transactionsList", transactionsList);
 
         if (title_bank.isEmpty()) {
             model.addAttribute("TitleBankError", "Це поле не може бути порожнім");

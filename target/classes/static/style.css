@@ -33,6 +33,7 @@ body {
 .btn.green:hover {
     background: linear-gradient(to left, #727a17, #414d0b);
     font-weight: bold;
+    color: #fff;
 }
 
 .btn.green:before {
@@ -50,6 +51,7 @@ body {
 .btn.orange:hover {
     background: linear-gradient(to left, #f83600, #fe8c00);
     font-weight: bold;
+    color: #fff;
 }
 
 .btn.orange:before {

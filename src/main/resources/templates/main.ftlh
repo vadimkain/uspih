@@ -1,21 +1,30 @@
 <#import "parts/common.ftlh" as c>
 <#import "parts/newbank.ftlh" as nb>
 <#import "parts/deletebank.ftlh" as db>
+<#import 'parts/newmoney.ftlh' as nw>
 
 <@c.page>
     <style>
+        @import url("https://netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css");
+
         .btn-bank {
             border-bottom: solid 3px #eec111;
         }
+
         .income {
             background: #727a17;
             color: white;
             font-weight: bold;
         }
+
         .expenditure {
             background: #c04848;
             color: white;
             font-weight: bold;
+        }
+
+        i {
+            font-family: fontawesome !important;
         }
     </style>
     <#if message??>
@@ -28,9 +37,12 @@
         <#if ActivateDeleteBankForm>
             <@db.deletebank "/main/deletebank"/>
         </#if>
-        <#if (ActivateNewBankForm == false) && (ActivateDeleteBankForm == false)>
+        <#if ActivateNewMoneyForm>
+            <@nw.newmoney "/main/newmoney"/>
+        </#if>
+        <#if (ActivateNewBankForm == false) && (ActivateDeleteBankForm == false) && (ActivateNewMoneyForm == false)>
             <div class="row">
-                <div class="col-md-5 col-lg-6">
+                <div class="col-md-12 col-lg-12">
                     <form method="get">
                         <button type="submit"
                                 name="newbank"
@@ -38,17 +50,17 @@
                                 class="btn btn-xs btn-bank">
                             <span style="font-weight: normal">Додати новий рахунок</span>
                         </button>
-                        <!--button type="submit"
-                                name="editbank"
-                                value="yes"
-                                class="btn btn-xs btn-bank">
-                            <span style="font-weight: normal">Редагувати поточний рахунок</span>
-                        </button-->
                         <button type="submit"
                                 name="deletebank"
                                 value="yes"
                                 class="btn btn-xs btn-bank">
                             <span style="font-weight: normal">Видалити поточний рахунок</span>
+                        </button>
+                        <button type="submit"
+                                name="newmoney"
+                                value="yes"
+                                class="btn btn-xs btn-bank">
+                            <span style="font-weight: normal">Додати витрату або дохід</span>
                         </button>
                     </form>
                 </div>
@@ -79,20 +91,32 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <th scope="row">1</th>
-                    <td>Рознічний клієнт</td>
-                    <td>Mono</td>
-                    <td><span class="income">+25000</span></td>
-                    <td>22-10-2021</td>
-                </tr>
-                <tr>
-                    <th scope="row">2</th>
-                    <td>Запчастини</td>
-                    <td>Privat24</td>
-                    <td><span class="expenditure">-2300</span></td>
-                    <td>20-10-2021</td>
-                </tr>
+                <form action="/main/deletetransaction" method="post">
+                    <#list transactionsList as tr>
+                        <tr>
+                            <th scope="col">
+                                <input type="hidden" name="_csrf" value="${_csrf.token}"/>
+                                <button style="
+                                            border: none;
+                                            outline: none;
+                                            background: none;"
+                                        type="submit"
+                                        name="deletetransaction"
+                                        value="${tr.getId()}">
+                                    <i class="fas fa-minus-square"></i>
+                                </button>
+                            </th>
+                            <td>${tr.getCategory()}</td>
+                            <td>${tr.getBank()}</td>
+                            <td>
+                            <span class="${(tr.getMoney() > 0)?string('income', 'expenditure')}">
+                                ${(tr.getMoney() > 0)?string('+', '')}${tr.getMoney()}
+                            </span>
+                            </td>
+                            <td>${tr.getLocalDate()}</td>
+                        </tr>
+                    </#list>
+                </form>
                 </tbody>
             </table>
         </div>
