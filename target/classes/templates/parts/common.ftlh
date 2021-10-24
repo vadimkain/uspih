@@ -5,6 +5,7 @@
         <meta charset="UTF-8">
         <title>Uspih</title>
         <link rel="stylesheet" href="/static/style.css">
+        <link rel="stylesheet" href="/static/font-awesome.min.css">
 
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -28,12 +29,13 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
     </head>
     <body>
-    <#include "navbar.ftlh">
-    <div class="container mt-5">
-        <!-- Добавляем секцию, которая принимает в себя вложенный код -->
-        <#nested>
+    <div id="wrap">
+        <#include "navbar.ftlh">
+        <div class="container mt-5">
+            <!-- Добавляем секцию, которая принимает в себя вложенный код -->
+            <#nested>
+        </div>
     </div>
-
     </body>
     </html>
 </#macro>

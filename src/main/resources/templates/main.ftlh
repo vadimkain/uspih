@@ -2,6 +2,8 @@
 <#import "parts/newbank.ftlh" as nb>
 <#import "parts/deletebank.ftlh" as db>
 <#import 'parts/newmoney.ftlh' as nw>
+<#import 'parts/newcategory.ftlh' as nc>
+<#import 'parts/deletecategory.ftlh' as dc>
 
 <@c.page>
     <style>
@@ -25,6 +27,7 @@
 
         i {
             font-family: fontawesome !important;
+            font-style: normal;
         }
     </style>
     <#if message??>
@@ -40,7 +43,19 @@
         <#if ActivateNewMoneyForm>
             <@nw.newmoney "/main/newmoney"/>
         </#if>
-        <#if (ActivateNewBankForm == false) && (ActivateDeleteBankForm == false) && (ActivateNewMoneyForm == false)>
+        <#if ActivateNewCategoryForm>
+            <@nc.newcategory "/main/newcategory"/>
+        </#if>
+        <#if AcivateDeleteCategoryForm>
+            <@dc.deletecategory "/main/deletecategory" />
+        </#if>
+        <#if
+        (ActivateNewBankForm == false) &&
+        (ActivateDeleteBankForm == false) &&
+        (ActivateNewMoneyForm == false) &&
+        (ActivateNewCategoryForm == false) &&
+        (AcivateDeleteCategoryForm == false)
+        >
             <div class="row">
                 <div class="col-md-12 col-lg-12">
                     <form method="get">
@@ -62,6 +77,18 @@
                                 class="btn btn-xs btn-bank">
                             <span style="font-weight: normal">Додати витрату або дохід</span>
                         </button>
+                        <button type="submit"
+                                name="newcategory"
+                                value="yes"
+                                class="btn btn-xs btn-bank">
+                            <span style="font-weight: normal">Додати категорію</span>
+                        </button>
+                        <button type="submit"
+                                name="deletecategory"
+                                value="yes"
+                                class="btn btn-xs btn-bank">
+                            <span style="font-weight: normal">Видалити категорію</span>
+                        </button>
                     </form>
                 </div>
             </div>
@@ -78,6 +105,7 @@
                     <h4 class="col-md-6 col-lg-6 col-6">${bank.getScore()}₴</h4>
                 </#list>
             </div>
+            <a href="/transaction-archive" class="link-primary">Переглянути архів транзакцій</a>
         </div>
         <div class="col-lg-8">
             <table class="table table-sm">

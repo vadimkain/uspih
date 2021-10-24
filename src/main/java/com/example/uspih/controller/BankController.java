@@ -39,49 +39,7 @@ public class BankController {
     private ValidateScoreCervice validateScoreCervice;
 
     @Autowired
-    private CategoriesRepo categoriesRepo;
-
-    @Autowired
     private TransactionRepo transactionRepo;
-
-    @GetMapping
-    public String MainPage(
-            @AuthenticationPrincipal User user,
-            HttpServletRequest request,
-            Model model) {
-        String parameter_newbank = request.getParameter("newbank");
-        String parameter_deletebank = request.getParameter("deletebank");
-        String parameter_newmoney = request.getParameter("newmoney");
-
-        if (Objects.equals(parameter_newbank, "yes")) {
-            model.addAttribute("ActivateNewBankForm", true);
-        } else {
-            model.addAttribute("ActivateNewBankForm", false);
-        }
-
-        if (Objects.equals(parameter_deletebank, "yes")) {
-            model.addAttribute("ActivateDeleteBankForm", true);
-        } else {
-            model.addAttribute("ActivateDeleteBankForm", false);
-        }
-
-        if (Objects.equals(parameter_newmoney, "yes")) {
-            model.addAttribute("ActivateNewMoneyForm", true);
-        } else {
-            model.addAttribute("ActivateNewMoneyForm", false);
-        }
-
-        List<Bank> banks = bankRepo.findByOwner(user);
-        List<CategoriesTransaction> categoriesTransactions = categoriesRepo.findByOwner(user);
-        Iterable<Transactions> transactionsList = transactionRepo.findByOwner(user);
-
-        model.addAttribute("banks", banks);
-        model.addAttribute("categories", categoriesTransactions);
-        model.addAttribute("TotalScore", bankService.TotalScore(user));
-        model.addAttribute("transactionsList", transactionsList);
-
-        return "main";
-    }
 
     @PostMapping("/newbank")
     public String NewBank(
@@ -96,6 +54,8 @@ public class BankController {
         model.addAttribute("ActivateNewBankForm", true);
         model.addAttribute("ActivateDeleteBankForm", false);
         model.addAttribute("ActivateNewMoneyForm", false);
+        model.addAttribute("ActivateNewCategoryForm", false);
+        model.addAttribute("AcivateDeleteCategoryForm", false);
         model.addAttribute("banks", banks);
         model.addAttribute("TotalScore", bankService.TotalScore(user));
         model.addAttribute("transactionsList", transactionsList);

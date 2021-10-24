@@ -1,32 +1,32 @@
-<#macro deletebank path>
+<#macro deletecategory path>
     <form action="${path}" method="post">
-        <h2>Видалити рахунок</h2>
+        <h2>Видалити категорію</h2>
         <br>
         <br>
         <fieldset class="form-group">
             <div class="row">
-                <legend class="col-form-label col-sm-2 pt-0"><b>Назва рахунку</b></legend>
+                <legend class="col-form-label col-sm-2 pt-0"><b>Назва категорії</b></legend>
                 <div class="col-sm-10">
-                    <#list banks as bank>
+                    <#list categories as category>
                         <div class="form-check">
-                            <#if bank.getTitle_bank() == "Головний рахунок">
+                            <#if category.getTitle_category() == "Зарплата">
                                 <input class="form-check-input"
                                        type="checkbox"
-                                       name="${bank.getTitle_bank()}"
-                                       id="TitleBankId${bank?counter}"
+                                       name="${category.getTitle_category()}"
+                                       id="TitleCategory${category?counter}"
                                        disabled>
-                                <label for="TitleBankId${bank?counter}"
+                                <label for="TitleCategory${category?counter}"
                                        class="form-check-label"
                                        style="color: #7f8291">
-                                    ${bank.getTitle_bank()}
+                                    ${category.getTitle_category()}
                                 </label>
                             <#else >
                                 <input class="form-check-input"
                                        type="checkbox"
-                                       name="${bank.getTitle_bank()}"
-                                       id="TitleBankId${bank?counter}">
-                                <label for="TitleBankId${bank?counter}">
-                                    ${bank.getTitle_bank()}
+                                       name="${category.getTitle_category()}"
+                                       id="TitleCategory${category?counter}">
+                                <label for="TitleCategory${category?counter}">
+                                    ${category.getTitle_category()}
                                 </label>
                             </#if>
                         </div>

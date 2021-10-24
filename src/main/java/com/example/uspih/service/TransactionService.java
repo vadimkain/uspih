@@ -26,6 +26,9 @@ public class TransactionService {
     @Autowired
     private CategoriesRepo categoriesRepo;
 
+    @Autowired
+    private TransactionsArchiveService transactionsArchiveService;
+
     public boolean AddTransaction(User user, Map<String, String> form) {
         List<Bank> banks = bankRepo.findByOwner(user);
         List<CategoriesTransaction> categoriesTransactions = categoriesRepo.findByOwner(user);
@@ -65,6 +68,8 @@ public class TransactionService {
     public boolean DeleteTransaction(User user, Long idTrans) {
 
         Transactions transaction = transactionRepo.findByIdAndOwner(idTrans, user);
+
+        transactionsArchiveService.archive(user, transaction);
 
         Bank updateBankScore = bankRepo.findByOwnerAndTitle_bank(user, transaction.getBank());
         updateBankScore.setScore(updateBankScore.getScore() - transaction.getMoney());

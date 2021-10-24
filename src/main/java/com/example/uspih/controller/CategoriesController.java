@@ -1,13 +1,13 @@
 package com.example.uspih.controller;
 
 import com.example.uspih.domain.Bank;
-import com.example.uspih.domain.CategoriesTransaction;
 import com.example.uspih.domain.Transactions;
 import com.example.uspih.domain.User;
 import com.example.uspih.repos.BankRepo;
 import com.example.uspih.repos.CategoriesRepo;
 import com.example.uspih.repos.TransactionRepo;
 import com.example.uspih.service.BankService;
+import com.example.uspih.service.CategoriesService;
 import com.example.uspih.service.TransactionService;
 import com.example.uspih.service.ValidateScoreCervice;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,14 +19,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.time.LocalDate;
-import java.util.List;
 import java.util.Map;
 
 @Controller
 @PreAuthorize("hasAuthority('ACTIVATE')")
 @RequestMapping("/main")
-public class TransactionController {
+public class CategoriesController {
 
     @Autowired
     private BankRepo bankRepo;
@@ -46,43 +44,42 @@ public class TransactionController {
     @Autowired
     private TransactionRepo transactionRepo;
 
-    @PostMapping("/newmoney")
-    public String NewMoney(
+    @Autowired
+    private CategoriesService categoriesService;
+
+    @PostMapping("/newcategory")
+    public String NewCategory(
             @AuthenticationPrincipal User user,
-            @RequestParam Map<String, String> form,
-            Model model
-    ) {
+            @RequestParam("title_category") String title_category,
+            Model model) {
+
         Iterable<Bank> banks = bankRepo.findByOwner(user);
-        List<CategoriesTransaction> categoriesTransactions = categoriesRepo.findByOwner(user);
         Iterable<Transactions> transactionsList = transactionRepo.findByOwner(user);
 
         model.addAttribute("ActivateNewBankForm", false);
         model.addAttribute("ActivateDeleteBankForm", false);
-        model.addAttribute("ActivateNewMoneyForm", true);
-        model.addAttribute("ActivateNewCategoryForm", false);
+        model.addAttribute("ActivateNewMoneyForm", false);
+        model.addAttribute("ActivateNewCategoryForm", true);
         model.addAttribute("AcivateDeleteCategoryForm", false);
         model.addAttribute("banks", banks);
-        model.addAttribute("categories", categoriesTransactions);
         model.addAttribute("TotalScore", bankService.TotalScore(user));
         model.addAttribute("transactionsList", transactionsList);
 
-        if (validateScoreCervice.ValidateScore(form.get("money"))) {
-            transactionService.AddTransaction(user, form);
-        } else {
-            model.addAttribute("MoneyError", "Неправильно введені дані. (Приклад: -25000,50 або 125000)");
+        if (!categoriesService.addCategory(user, title_category)) {
+            model.addAttribute("TitleCategoryError", "Така категорія вже існує");
             return "main";
         }
-
         return "redirect:/main";
     }
 
-    @PostMapping("/deletetransaction")
-    public String DeleteTransaction(
+    @PostMapping("/deletecategory")
+    public String DeleteCategory(
             @AuthenticationPrincipal User user,
-            @RequestParam("deletetransaction") Long idTrans,
-            Model model) {
+            @RequestParam Map<String, String> form,
+            Model model
+    ) {
 
-        transactionService.DeleteTransaction(user, idTrans);
+        categoriesService.DeleteCategory(user, form);
 
         return "redirect:/main";
     }
